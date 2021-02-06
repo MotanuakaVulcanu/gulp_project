@@ -105,7 +105,7 @@ gulp.task('otf2ttf', function(){
 
 
     
-gulp.task('svgSprite', function(){
+function svg(){
     return gulp.src([source_folder+'/iconsprite/*.svg'])
     .pipe(svgSprite({
         mode:{
@@ -117,7 +117,7 @@ gulp.task('svgSprite', function(){
     }))
     .pipe(dest(path.build.img))
 
-})
+}
 
 function js(){
     return src(path.src.js)
@@ -185,9 +185,10 @@ function clean(){
     return del(path.clean);
 }
 
-let build = gulp.series(clean,  gulp.parallel(html, css, js, images, fonts), fontsStyle);
+let build = gulp.series(clean,  gulp.parallel(html, css, js, images, fonts, svg), fontsStyle);
 let watch = gulp.parallel(build, watchFiles, browsSync);
 
+exports.svg = svg;
 exports.fontsStyle = fontsStyle;
 exports.fonts = fonts;
 exports.images = images;
